@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mandarin-robotics
+  labels:
+    run: mandarin-robotics
+spec:
+  selector:
+    run: mandarin-robotics
+  ports:
+    - protocol: TCP
+      name: mr-web
+      port: 4200
+      targetPort: 4200
+    - protocol: TCP
+      name: mr-web-bff
+      port: 3000
+      targetPort: 3000
+    - protocol: TCP
+      name: guitar-tabs-api
+      port: 3001
+      targetPort: 3001

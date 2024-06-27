@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mandarin-robotics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: mandarin-robotics
+  template:
+    metadata:
+      labels:
+        run: mandarin-robotics
+    spec:
+      containers:
+      - name: mr-web
+        image: kenlai212/mr-web
+        ports:
+        - containerPort: 4200
+      - name: mr-web-bff
+        image: kenlai212/mr-web-bff
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+      - name: guitar-tabs-api
+        image: kenlai212/guitar-tabs-api
+        ports:
+        - containerPort: 3001
+        env:
+        - name: PORT
+          value: "3001"
