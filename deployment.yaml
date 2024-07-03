@@ -25,6 +25,7 @@ metadata:
   labels:
     run: mr-web
 spec:
+  type: NodePort
   selector:
     run: mr-web
   ports:
@@ -65,6 +66,7 @@ metadata:
   labels:
     run: mr-web-bff
 spec:
+  type: NodePort
   selector:
     run: mr-web-bff
   ports:
@@ -103,6 +105,7 @@ metadata:
   labels:
     run: guitar-tabs-api
 spec:
+  type: NodePort
   selector:
     run: guitar-tabs-api
   ports:

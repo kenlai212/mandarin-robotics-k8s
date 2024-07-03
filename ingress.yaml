@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mandarin-robotics
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: mandarin-robotics.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                  name: mr-web
+                  port:
+                    number: 4200
+          - path: /mr-web-bff
+            pathType: Prefix
+            backend:
+              service:
+                  name: mr-web-bff
+                  port:
+                    number: 3000
