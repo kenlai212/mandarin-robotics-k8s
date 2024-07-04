@@ -1,13 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: mandarin-robotics
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
+  name: mandarin-robotics 
 spec:
   rules:
-    - host: mandarin-robotics.com
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
