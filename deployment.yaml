@@ -15,6 +15,7 @@ spec:
       containers:
       - name: mr-web
         image: kenlai212/mr-web
+        imagePullPolicy: Always
         ports:
         - containerPort: 4200
 ---
@@ -51,6 +52,7 @@ spec:
       containers:
       - name: mr-web-bff
         image: kenlai212/mr-web-bff
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
@@ -92,6 +94,7 @@ spec:
       containers:
       - name: guitar-tabs-api
         image: kenlai212/guitar-tabs-api
+        imagePullPolicy: Always
         ports:
         - containerPort: 3001
         env:
