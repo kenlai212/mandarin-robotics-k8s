@@ -1,0 +1,36 @@
+version: "3"
+services:
+  me-web:
+    image: mr-web
+    container_name: mr-web
+    ports:
+      - 4200:4200
+    networks:
+      - app-network
+  mr-web-bff:
+    image: mr-web-bff
+    container_name: mr-web-bff
+    environment:
+      - PORT=3001
+      - TASKS_API_HOST=tasks-api:3000
+      - GUITAR_TABS_API_HOST=localhost:3002
+    ports:
+      - 3001:3001
+    networks:
+      - app-network  
+  tasks-api:
+    image: tasks-api
+    container_name: tasks-api
+    environment:
+      - PORT=3000
+      - PREFIX=tasks-api
+      - MONGO_HOST=mongodb:27017
+    ports:
+      - 3000:3000
+    command: bash -c "npm run start:prod"
+    networks:
+      - app-network
+networks:
+  app-network:
+    name: app-network
+    external: true
