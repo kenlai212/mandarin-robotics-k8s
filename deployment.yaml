@@ -58,8 +58,10 @@ spec:
         env:
         - name: PORT
           value: "3000"
+        - name: TASKS_API_HOST
+          value: tasks-api:3001
         - name: GUITAR_TABS_API_HOST
-          value: "guitar-tabs-api:3001"
+          value: "guitar-tabs-api:3002"
 ---
 apiVersion: v1
 kind: Service
@@ -80,6 +82,56 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: tasks-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: tasks-api
+  template:
+    metadata:
+      labels:
+        run: tasks-api
+    spec:
+      containers:
+      - name: tasks-api
+        image: kenlai212/tasks-api
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001
+        env:
+        - name: PORT
+          value: "3000"
+        - name: PREFIX
+          value: tasks-api
+        - name: MYSQL_HOST
+          value: mandarin-robotics.mysql.database.azure.com
+        - name: MYSQL_PORT
+          value: 3306
+        - name: MYSQL_USER
+          value: user
+        - name: MYSQL_PWD
+          value: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasks-api
+  labels:
+    run: tasks-api
+spec:
+  type: NodePort
+  selector:
+    run: tasks-api
+  ports:
+    - protocol: TCP
+      name: tasks-api
+      port: 3001
+      targetPort: 3001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: guitar-tabs-api
 spec:
   replicas: 1
@@ -96,10 +148,10 @@ spec:
         image: kenlai212/guitar-tabs-api
         imagePullPolicy: Always
         ports:
-        - containerPort: 3001
+        - containerPort: 3002
         env:
         - name: PORT
-          value: "3001"
+          value: "3002"
 ---
 apiVersion: v1
 kind: Service
@@ -114,5 +166,5 @@ spec:
   ports:
     - protocol: TCP
       name: guitar-tabs-api
-      port: 3001
-      targetPort: 3001
+      port: 3002
+      targetPort: 3002
