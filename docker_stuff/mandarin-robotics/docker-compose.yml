@@ -11,22 +11,25 @@ services:
     image: mr-web-bff
     container_name: mr-web-bff
     environment:
-      - PORT=3001
-      - TASKS_API_HOST=tasks-api:3000
+      - PORT=3000
+      - TASKS_API_HOST=tasks-api:3001
       - GUITAR_TABS_API_HOST=localhost:3002
     ports:
-      - 3001:3001
+      - 3000:3000
     networks:
       - app-network  
   tasks-api:
     image: tasks-api
     container_name: tasks-api
     environment:
-      - PORT=3000
+      - PORT=3001
       - PREFIX=tasks-api
-      - MONGO_HOST=mongodb:27017
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=user
+      - MYSQL_PWD=password
     ports:
-      - 3000:3000
+      - 3001:3001
     command: bash -c "npm run start:prod"
     networks:
       - app-network
