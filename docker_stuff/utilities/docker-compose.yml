@@ -14,3 +14,9 @@ services:
     volumes:
       - ./data:/data/db
       - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+networks:
+  app-network:
+    name: app-network
+    external: true
